@@ -449,13 +449,89 @@ header.scrolled {
         font-size: 1rem;
     }
 
-    /* Section padding */
+    /* Hero Slider - scale down on mobile */
+    .swiper {
+        height: 65vh !important;
+    }
+
+    /* Hero slider titles & subtitles (override inline clamp) */
+    .slide-content h1,
+    .slide-content .font-heading {
+        font-size: clamp(1.5rem, 6vw, 2.2rem) !important;
+        line-height: 1.2 !important;
+        margin-bottom: 12px !important;
+    }
+
+    .slide-content p {
+        font-size: 0.95rem !important;
+        margin-bottom: 25px !important;
+    }
+
+    .slide-content .btn {
+        padding: 10px 25px !important;
+        font-size: 0.85rem !important;
+    }
+
+    /* Section padding - tighten on mobile */
     section {
-        padding: 40px 15px !important;
+        padding: 50px 15px !important;
+    }
+
+    /* Section headings - override all inline 2.5rem h2 elements */
+    h2 {
+        font-size: 1.5rem !important;
+        margin-bottom: 20px !important;
+    }
+
+    h3 {
+        font-size: 1.1rem !important;
+    }
+
+    /* Section header containers - reduce bottom margins */
+    div[style*="margin-bottom: 60px"],
+    div[style*="margin-bottom: 50px"] {
+        margin-bottom: 30px !important;
+    }
+
+    /* Subtitle paragraphs under section headings */
+    section p[style*="max-width: 600px"],
+    section p[style*="max-width: 700px"],
+    section p[style*="max-width: 900px"] {
+        font-size: 0.88rem !important;
+        line-height: 1.6 !important;
+        padding: 0 5px;
+    }
+
+    /* About section text */
+    section#about p[style*="font-size: 1.2rem"] {
+        font-size: 0.95rem !important;
+        line-height: 1.7 !important;
+    }
+
+    /* Page headers (Car Hiring, Transfer Services etc.) */
+    .page-header {
+        padding: 90px 15px 40px !important;
+    }
+
+    .page-header h1 {
+        font-size: 1.8rem !important;
+        margin-bottom: 12px !important;
+    }
+
+    .page-header p {
+        font-size: 0.9rem !important;
+    }
+
+    /* Grid on subpages - stack on mobile */
+    div[style*="grid-template-columns: repeat(auto-fit, minmax(320px"],
+    div[style*="grid-template-columns: repeat(auto-fit, minmax(350px"] {
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
     }
 
     /* Card grids - stack on mobile */
     .tour-grid, .vehicle-grid, .transfer-grid,
+    .services-grid,
     div[style*="grid-template-columns: repeat(3"],
     div[style*="grid-template-columns: repeat(4"] {
         grid-template-columns: 1fr !important;
@@ -471,10 +547,42 @@ header.scrolled {
         gap: 15px !important;
     }
 
+    /* Tour card titles inside overlays */
+    .tour-card h3.font-heading {
+        font-size: 1.25rem !important;
+        margin-bottom: 8px !important;
+    }
+
+    /* Tour card heights */
+    .tour-card {
+        height: 380px !important;
+    }
+
+    /* Vehicle card heading */
+    .vehicle-card h3.font-heading {
+        font-size: 1.15rem !important;
+    }
+
+    /* Transfer card heading */
+    .transfer-card h3.font-heading {
+        font-size: 1.1rem !important;
+    }
+
+    /* Venture card images */
+    .venture-card div[style*="height: 180px"] {
+        height: 140px !important;
+    }
+
     /* Buttons */
     .btn {
         padding: 12px 25px;
         font-size: 0.9rem;
+    }
+
+    /* "See all" action buttons */
+    a.btn[style*="padding: 15px 40px"] {
+        padding: 12px 30px !important;
+        font-size: 0.9rem !important;
     }
 
     /* Venture cards */
@@ -492,13 +600,19 @@ header.scrolled {
         font-size: 16px !important; /* Prevents iOS zoom */
     }
 
-    /* Section headings */
-    h2 {
-        font-size: 1.5rem !important;
+    /* Badge labels */
+    span[style*="letter-spacing: 2px"] {
+        font-size: 0.75rem !important;
+        letter-spacing: 1px !important;
     }
 
-    h3 {
-        font-size: 1.15rem !important;
+    /* Footer */
+    footer {
+        padding: 35px 15px !important;
+    }
+
+    footer p {
+        font-size: 0.85rem !important;
     }
 }
 
@@ -517,6 +631,20 @@ header.scrolled {
         margin-bottom: 25px;
     }
 
+    /* Hero Slider - even smaller on tiny phones */
+    .swiper {
+        height: 55vh !important;
+    }
+
+    .slide-content h1,
+    .slide-content .font-heading {
+        font-size: clamp(1.2rem, 5.5vw, 1.8rem) !important;
+    }
+
+    .slide-content p {
+        font-size: 0.85rem !important;
+    }
+
     .btn {
         padding: 10px 20px;
         font-size: 0.85rem;
@@ -531,9 +659,30 @@ header.scrolled {
         padding: 30px 12px !important;
     }
 
+    /* Section headings - even smaller */
+    h2 {
+        font-size: 1.3rem !important;
+        margin-bottom: 15px !important;
+    }
+
+    h3 {
+        font-size: 1rem !important;
+    }
+
+    /* Tour cards - reduce height further */
+    .tour-card {
+        height: 340px !important;
+    }
+
     /* Booking form full width */
     .booking-form, .card {
         padding: 15px !important;
         border-radius: 16px !important;
     }
+
+    /* About section text */
+    section#about p[style*="font-size: 1.2rem"] {
+        font-size: 0.88rem !important;
+    }
 }
+
