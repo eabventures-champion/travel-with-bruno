@@ -12,7 +12,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}?v={{ time() }}">
+    @php
+        $cssUrl = asset('assets/css/main.css');
+        if (request()->isSecure() || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') || (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) === 'on')) {
+            $cssUrl = secure_asset('assets/css/main.css');
+        }
+    @endphp
+    <link rel="stylesheet" href="{{ $cssUrl }}?v={{ time() }}">
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
