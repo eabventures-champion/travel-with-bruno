@@ -43,3 +43,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/booking-documents/{document}/download', [\Modules\Booking\Http\Controllers\BookingDocumentController::class, 'download'])->name('bookings.documents.download');
     Route::delete('/booking-documents/{document}', [\Modules\Booking\Http\Controllers\BookingDocumentController::class, 'destroy'])->name('bookings.documents.destroy');
 });
+
+Route::get('/clear-cache', function () {
+    \Illuminate\Support\Facades\Artisan::call('view:clear');
+    \Illuminate\Support\Facades\Artisan::call('cache:clear');
+    \Illuminate\Support\Facades\Artisan::call('config:clear');
+    \Illuminate\Support\Facades\Artisan::call('route:clear');
+    return 'All Laravel caches (views, cache, config, routes) cleared successfully!';
+});
