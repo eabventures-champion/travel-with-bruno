@@ -60,36 +60,44 @@ Route::get('/clear-cache', function () {
     \Illuminate\Support\Facades\Artisan::call('route:clear');
     $feedback[] = 'Laravel route cache cleared successfully!';
 
-    // File copy helper for "without .htaccess" Hostinger structure
-    $sourceCss = base_path('public/assets/css/main.css');
+    // Recursive folder copy helper for Hostinger split structure
+    $sourcePublic = base_path('public');
+    $destPublicHtml = base_path('../public_html');
     
-    // Target 1: same directory assets (e.g. public_html is base path)
-    $destCss1 = base_path('assets/css/main.css');
-    // Target 2: parent directory public_html (split structure)
-    $destCss2 = base_path('../public_html/assets/css/main.css');
-    
-    if (file_exists($sourceCss)) {
-        // Copy to Target 1
-        $destDir1 = dirname($destCss1);
-        if (!is_dir($destDir1)) {
-            mkdir($destDir1, 0755, true);
-        }
-        if (copy($sourceCss, $destCss1)) {
-            $feedback[] = 'Copied main.css to base assets folder successfully!';
-        }
+    if (is_dir($sourcePublic)) {
+        $copyCount = 0;
         
-        // Copy to Target 2 (for split bruno-core and public_html structure)
-        $destDir2 = dirname($destCss2);
-        if (is_dir(dirname($destDir2))) { // Check if the parent of the destination directory exists
-            if (!is_dir($destDir2)) {
-                mkdir($destDir2, 0755, true);
+        $recurseCopy = function ($src, $dst) use (&$recurseCopy, &$copyCount, $sourcePublic) {
+            if (!is_dir($src)) return;
+            $dir = opendir($src);
+            @mkdir($dst, 0755, true);
+            while (false !== ($file = readdir($dir))) {
+                if (($file != '.') && ($file != '..')) {
+                    // Do not overwrite the main entry index.php in public_html root
+                    if ($file === 'index.php' && $src === $sourcePublic) {
+                        continue;
+                    }
+                    
+                    $srcFile = $src . '/' . $file;
+                    $dstFile = $dst . '/' . $file;
+                    
+                    if (is_dir($srcFile)) {
+                        $recurseCopy($srcFile, $dstFile);
+                    } else {
+                        if (copy($srcFile, $dstFile)) {
+                            $copyCount++;
+                        }
+                    }
+                }
             }
-            if (copy($sourceCss, $destCss2)) {
-                $feedback[] = 'Copied main.css to public_html assets folder successfully!';
-            }
-        }
+            closedir($dir);
+        };
+        
+        // Execute recursive sync from bruno-core/public to public_html
+        $recurseCopy($sourcePublic, $destPublicHtml);
+        $feedback[] = "Synced {$copyCount} public asset file(s) from bruno-core/public to public_html successfully!";
     } else {
-        $feedback[] = 'Source main.css not found in public folder.';
+        $feedback[] = 'Source public/ folder not found.';
     }
 
     return implode('<br>', $feedback);
