@@ -1,5 +1,4 @@
 name: Auto Deploy to Hostinger (bruno-core)
-# Trigger test deploy
 
 on:
   push:
@@ -15,6 +14,11 @@ jobs:
     - name: 🚚 Get latest code
       uses: actions/checkout@v4
 
+    - name: 🔑 Add SSH Host Key to Known Hosts
+      run: |
+        mkdir -p ~/.ssh
+        ssh-keyscan -p ${{ secrets.SFTP_PORT || 65002 }} -H ${{ secrets.SFTP_SERVER }} >> ~/.ssh/known_hosts
+
     - name: 📂 Sync files to Hostinger
       uses: wlixcc/SFTP-Deploy-Action@v1.2.6
       with:
@@ -25,5 +29,4 @@ jobs:
         local_path: './*'
         remote_path: '/home/u646076946/bruno-core'
         sftp_only: true
-        sftpArgs: '-o StrictHostKeyChecking=no'
         rsyncArgs: '--exclude=node_modules --exclude=.git --exclude=.github --exclude=vendor --exclude=.env --exclude=storage/logs'
