@@ -80,7 +80,7 @@ header {
 }
 
 header.scrolled {
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(15px);
     padding: 12px 50px;
     box-shadow: 0 4px 15px -3px rgba(0,0,0,0.1);
@@ -92,21 +92,34 @@ header.scrolled {
     font-size: 1.5rem;
     font-weight: 800;
     letter-spacing: 1px;
-    color: var(--text-white);
 }
 
-header.scrolled .logo {
-    color: var(--primary);
+.logo a {
+    text-decoration: none;
+    color: #000000 !important;
+    transition: opacity 0.3s ease;
+}
+
+.logo a:hover {
+    opacity: 0.85;
+}
+
+.logo a span {
+    color: #dc2626 !important;
 }
 
 .desktop-nav a {
-    color: inherit;
+    color: var(--secondary) !important;
     text-decoration: none;
     margin-left: 30px;
-    font-weight: 600;
+    font-weight: 700;
     font-size: 0.9rem;
     text-transform: uppercase;
-    transition: color 0.3s;
+    transition: color 0.3s ease;
+}
+
+.desktop-nav a:hover {
+    color: #dc2626 !important;
 }
 
 .btn-nav {
@@ -119,7 +132,7 @@ header.scrolled .logo {
     display: none;
     background: rgba(15, 23, 42, 0.05);
     border: none;
-    color: inherit;
+    color: var(--secondary) !important;
     width: 45px;
     height: 45px;
     border-radius: 12px;
@@ -132,13 +145,13 @@ header.scrolled .logo {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.tour-card, .vehicle-card, .transfer-card {
-    cursor: pointer;
+.mobile-toggle:hover {
+    color: #dc2626 !important;
+    background: rgba(220, 38, 38, 0.05) !important;
 }
 
-header.scrolled .mobile-toggle {
-    background: rgba(30, 58, 138, 0.05);
-    color: var(--primary);
+.tour-card, .vehicle-card, .transfer-card {
+    cursor: pointer;
 }
 
 .mobile-nav {

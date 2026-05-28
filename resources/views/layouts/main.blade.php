@@ -477,20 +477,7 @@
             color: var(--primary) !important;
         }
 
-        header:not(.scrolled) .dropdown-menu {
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(10px);
-            border-color: rgba(255, 255, 255, 0.1);
-        }
 
-        header:not(.scrolled) .dropdown-menu a {
-            color: white !important;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        header:not(.scrolled) .dropdown-menu a:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
     </style>
     @yield('styles')
 </head>
@@ -500,11 +487,11 @@
     @include('partials.tourism-modals')
 
     <header id="header" :class="{ 'scrolled': window.scrollY > 50 || mobileMenuOpen }"
-        style="position: fixed; width: 100%; top: 0; z-index: 1000; transition: all 0.3s ease; background: transparent;"
+        style="position: fixed; width: 100%; top: 0; z-index: 1000; transition: all 0.3s ease; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(15px); box-shadow: 0 2px 10px rgba(0,0,0,0.06);"
         :style="mobileMenuOpen ? 'color: var(--secondary) !important; background: white !important;' : ''">
         <div class="logo">
-            <a href="/" style="text-decoration: none; color: inherit;">
-                <span style="color: var(--accent);">BRUNO</span> HEIGHTS VENTURES
+            <a href="/" style="text-decoration: none; color: #000000; font-weight: 800;">
+                <span style="color: #dc2626;">BRUNO</span> HEIGHTS VENTURES
             </a>
         </div>
 
