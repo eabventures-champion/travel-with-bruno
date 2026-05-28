@@ -27,6 +27,5 @@ jobs:
         password: ${{ secrets.SFTP_PASSWORD }}
         port: ${{ secrets.SFTP_PORT || 65002 }}
         local_path: './*'
-        remote_path: 'bruno-core/'
-        sftp_only: true
+        remote_path: '/home/u646076946/bruno-core/'
         rsyncArgs: '--exclude=node_modules --exclude=.git --exclude=.github --exclude=vendor --exclude=.env --exclude=storage/logs'
