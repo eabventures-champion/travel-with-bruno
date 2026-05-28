@@ -45,9 +45,40 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::get('/clear-cache', function () {
+    $feedback = [];
+    
+    // Clear Laravel caches
     \Illuminate\Support\Facades\Artisan::call('view:clear');
+    $feedback[] = 'Laravel view cache cleared successfully!';
+    
     \Illuminate\Support\Facades\Artisan::call('cache:clear');
+    $feedback[] = 'Laravel application cache cleared successfully!';
+    
     \Illuminate\Support\Facades\Artisan::call('config:clear');
+    $feedback[] = 'Laravel config cache cleared successfully!';
+    
     \Illuminate\Support\Facades\Artisan::call('route:clear');
-    return 'All Laravel caches (views, cache, config, routes) cleared successfully!';
+    $feedback[] = 'Laravel route cache cleared successfully!';
+
+    // File copy helper for "without .htaccess" Hostinger structure
+    $sourceCss = base_path('public/assets/css/main.css');
+    $destCss = base_path('assets/css/main.css');
+    
+    if (file_exists($sourceCss)) {
+        // Ensure destination folder exists
+        $destDir = dirname($destCss);
+        if (!is_dir($destDir)) {
+            mkdir($destDir, 0755, true);
+        }
+        
+        if (copy($sourceCss, $destCss)) {
+            $feedback[] = 'Copied public/assets/css/main.css to assets/css/main.css successfully!';
+        } else {
+            $feedback[] = 'Failed to copy main.css from public folder to root assets folder.';
+        }
+    } else {
+        $feedback[] = 'Source main.css not found in public folder.';
+    }
+
+    return implode('<br>', $feedback);
 });
