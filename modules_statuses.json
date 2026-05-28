@@ -1,0 +1,9 @@
+{
+    "Auth": true,
+    "Admin": true,
+    "Tourism": true,
+    "Fleet": true,
+    "Booking": true,
+    "CMS": true,
+    "Driver": true
+}
