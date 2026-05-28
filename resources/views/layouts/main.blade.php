@@ -490,7 +490,7 @@
         style="position: fixed; width: 100%; top: 0; z-index: 1000; transition: all 0.3s ease; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(15px); box-shadow: 0 2px 10px rgba(0,0,0,0.06);"
         :style="mobileMenuOpen ? 'color: var(--secondary) !important; background: white !important;' : ''">
         <div class="logo">
-            <a href="/" style="text-decoration: none; color: #000000; font-weight: 800;">
+            <a href="/" style="text-decoration: none; color: #000000; font-weight: 800; white-space: nowrap;">
                 <span style="color: #dc2626;">BRUNO</span> HEIGHTS VENTURES
             </a>
         </div>
