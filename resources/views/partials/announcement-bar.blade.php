@@ -19,19 +19,50 @@
     @media (max-width: 768px) { .announcement-bar { flex-direction: column; gap: 8px; font-size: 0.8rem; } }
 </style>
 <script>
-    function adjustAnnouncementBar() {
+    function adjustHeaderAndBanner() {
         var header = document.getElementById('header');
         var bar = document.getElementById('announcement-bar');
-        if (header && bar) {
-            var h = header.offsetHeight;
-            bar.style.marginTop = h + 'px';
-            bar.style.top = h + 'px';
+        if (!header) return;
+        
+        if (!bar) {
+            header.style.top = '0px';
+            document.body.style.paddingTop = header.offsetHeight + 'px';
+            return;
+        }
+
+        var isMobile = window.innerWidth <= 1024;
+        
+        // Reset dynamic styles first
+        header.style.top = '';
+        bar.style.top = '';
+        bar.style.marginTop = '';
+        bar.style.position = '';
+
+        var headerHeight = header.offsetHeight;
+        var barHeight = bar.offsetHeight;
+
+        if (isMobile) {
+            // Mobile: Header is fixed at the absolute top (top: 0)
+            // Announcement banner sits fixed below it (top: headerHeight)
+            header.style.top = '0px';
+            bar.style.position = 'fixed';
+            bar.style.width = '100%';
+            bar.style.top = headerHeight + 'px';
+            document.body.style.paddingTop = (headerHeight + barHeight) + 'px';
+        } else {
+            // Desktop: Announcement banner is fixed at the absolute top (top: 0)
+            // Header sits fixed below it (top: barHeight)
+            bar.style.position = 'fixed';
+            bar.style.width = '100%';
+            bar.style.top = '0px';
+            header.style.top = barHeight + 'px';
+            document.body.style.paddingTop = (headerHeight + barHeight) + 'px';
         }
     }
-    document.addEventListener('DOMContentLoaded', adjustAnnouncementBar);
-    window.addEventListener('resize', adjustAnnouncementBar);
-    window.addEventListener('load', adjustAnnouncementBar);
-    window.addEventListener('scroll', adjustAnnouncementBar);
+    document.addEventListener('DOMContentLoaded', adjustHeaderAndBanner);
+    window.addEventListener('resize', adjustHeaderAndBanner);
+    window.addEventListener('load', adjustHeaderAndBanner);
+    window.addEventListener('scroll', adjustHeaderAndBanner);
 </script>
 @endif
 

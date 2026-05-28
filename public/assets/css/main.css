@@ -89,9 +89,11 @@ header.scrolled {
 
 .logo {
     font-family: 'Outfit', sans-serif;
-    font-size: 1.5rem;
+    font-size: clamp(1.2rem, 1.8vw, 1.5rem);
     font-weight: 800;
     letter-spacing: 1px;
+    white-space: nowrap; /* Fit Bruno Heights Ventures in a single row */
+    flex-shrink: 0;
 }
 
 .logo a {
@@ -108,10 +110,16 @@ header.scrolled {
     color: #dc2626 !important;
 }
 
+.desktop-nav {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
 .desktop-nav a {
     color: var(--secondary) !important;
     text-decoration: none;
-    margin-left: 30px;
+    margin-left: clamp(10px, 1.5vw, 30px) !important; /* Dynamically scale link spacing to fit screen width */
     font-weight: 700;
     font-size: 0.9rem;
     text-transform: uppercase;
@@ -130,24 +138,40 @@ header.scrolled {
 
 .mobile-toggle {
     display: none;
-    background: rgba(15, 23, 42, 0.05);
+    background: transparent;
     border: none;
-    color: var(--secondary) !important;
-    width: 45px;
-    height: 45px;
-    border-radius: 12px;
-    display: none; /* Hidden by default, shown in media query */
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
+    width: 28px;
+    height: 20px;
+    position: relative;
     cursor: pointer;
-    z-index: 1001;
+    z-index: 1010;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.mobile-toggle:hover {
-    color: #dc2626 !important;
-    background: rgba(220, 38, 38, 0.05) !important;
+.hamburger-line {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: var(--secondary);
+    border-radius: 3px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Active State (X Morph Animation) */
+.mobile-toggle.active .hamburger-line:nth-child(1) {
+    transform: translateY(8.5px) rotate(45deg);
+}
+
+.mobile-toggle.active .hamburger-line:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+}
+
+.mobile-toggle.active .hamburger-line:nth-child(3) {
+    transform: translateY(-8.5px) rotate(-45deg);
 }
 
 .tour-card, .vehicle-card, .transfer-card {
@@ -157,16 +181,18 @@ header.scrolled {
 .mobile-nav {
     display: none;
     position: fixed;
-    top: 0;
+    top: 75px; /* Sits exactly below mobile header */
     left: 0;
     width: 100%;
-    height: 100vh;
+    height: calc(100vh - 75px);
     background: white;
     flex-direction: column;
-    padding: 100px 40px 40px;
+    padding: 30px 25px 40px;
     gap: 10px;
-    z-index: 1000;
+    z-index: 999; /* Under header z-index */
     overflow-y: auto;
+    border-top: 1px solid #f1f5f9;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
 }
 
 .mobile-nav a {
@@ -181,13 +207,13 @@ header.scrolled {
 }
 
 .mobile-nav a:hover {
-    color: var(--primary);
+    color: #dc2626;
     padding-left: 10px;
 }
 
 [x-cloak] { display: none !important; }
 
-/* Responsive */
+/* Responsive Styling */
 @media (max-width: 1024px) {
     header {
         padding: 15px 25px;

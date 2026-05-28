@@ -421,27 +421,37 @@
         </nav>
 
         <!-- Mobile Toggle -->
-        <button class="mobile-toggle" @click="mobileMenuOpen = !mobileMenuOpen">
-            <i class="fas" :class="mobileMenuOpen ? 'fa-times' : 'fa-bars'"></i>
+        <button class="mobile-toggle" @click="mobileMenuOpen = !mobileMenuOpen" :class="{ 'active': mobileMenuOpen }">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
         </button>
 
         <!-- Mobile Nav -->
         <div class="mobile-nav" x-show="mobileMenuOpen" 
-             x-transition:enter="transition ease-out duration-500" 
-             x-transition:enter-start="opacity-0 -translate-y-full" 
+             x-transition:enter="transition ease-out duration-400" 
+             x-transition:enter-start="opacity-0 -translate-y-10" 
              x-transition:enter-end="opacity-100 translate-y-0"
              x-transition:leave="transition ease-in duration-300" 
              x-transition:leave-start="opacity-100 translate-y-0" 
-             x-transition:leave-end="opacity-0 -translate-y-full"
+             x-transition:leave-end="opacity-0 -translate-y-10"
              x-cloak>
             <a href="#about" @click="mobileMenuOpen = false">About Us</a>
-            <div x-data="{ tourOpen: false }">
-                <a @click="tourOpen = !tourOpen" style="display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
-                    Tour <i class="fas" :class="tourOpen ? 'fa-chevron-up' : 'fa-chevron-down'" style="font-size: 1rem; opacity: 0.5;"></i>
+            <div x-data="{ tourOpen: false }" style="border-bottom: 1px solid #f1f5f9;">
+                <a @click="tourOpen = !tourOpen" style="display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-size: 1.5rem; font-weight: 800; font-family: 'Outfit', sans-serif; color: var(--secondary); padding: 15px 0; border: none;">
+                    Tourism <i class="fas" :class="tourOpen ? 'fa-chevron-up' : 'fa-chevron-down'" style="font-size: 1.1rem; opacity: 0.5;"></i>
                 </a>
-                <div x-show="tourOpen" x-cloak style="padding-left: 20px; background: #f8fafc; border-radius: 15px; margin-bottom: 10px;">
-                    <a href="{{ route('tourism.destinations') }}" @click="mobileMenuOpen = false" style="font-size: 1.1rem; padding: 12px 0; border: none;">Destinations</a>
-                    <a href="{{ route('tourism.group-tours') }}" @click="mobileMenuOpen = false" style="font-size: 1.1rem; padding: 12px 0; border: none;">Organized</a>
+                <div x-show="tourOpen" x-cloak 
+                     x-transition:enter="transition ease-out duration-300"
+                     x-transition:enter-start="opacity-0 transform -translate-y-2"
+                     x-transition:enter-end="opacity-100 transform translate-y-0"
+                     style="padding-left: 15px; border-left: 3px solid var(--accent); margin: 0 0 15px 5px; display: flex; flex-direction: column; gap: 5px;">
+                    <a href="{{ route('tourism.destinations') }}" @click="mobileMenuOpen = false" style="font-size: 1.2rem; font-weight: 600; padding: 10px 0; border: none; display: flex; align-items: center; gap: 10px; color: var(--secondary);">
+                        <i class="fas fa-map-marked-alt" style="color: var(--accent); font-size: 1rem; width: 20px;"></i> Destination tours
+                    </a>
+                    <a href="{{ route('tourism.group-tours') }}" @click="mobileMenuOpen = false" style="font-size: 1.2rem; font-weight: 600; padding: 10px 0; border: none; display: flex; align-items: center; gap: 10px; color: var(--secondary);">
+                        <i class="fas fa-users" style="color: var(--accent); font-size: 1rem; width: 20px;"></i> Organized tours
+                    </a>
                 </div>
             </div>
             <a href="{{ route('car-hiring') }}" @click="mobileMenuOpen = false">Car Hiring Services</a>
