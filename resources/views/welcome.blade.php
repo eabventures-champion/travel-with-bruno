@@ -368,7 +368,7 @@
 </head>
 
 <body x-data="bookingApp">
-    @include('partials.announcement-bar')
+
     @include('partials.tourism-modals')
     
     @if(session('success'))
@@ -465,6 +465,8 @@
             @endif
         </div>
     </header>
+
+    @include('partials.announcement-bar')
 
     <!-- Hero Slider -->
     <section class="hero-slider">

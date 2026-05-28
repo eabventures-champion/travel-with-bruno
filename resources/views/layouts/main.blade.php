@@ -496,7 +496,7 @@
 </head>
 
 <body x-data="bookingApp">
-    @include('partials.announcement-bar')
+
     @include('partials.tourism-modals')
 
     <header id="header" :class="{ 'scrolled': window.scrollY > 50 || mobileMenuOpen }"
@@ -574,6 +574,8 @@
             @endif
         </div>
     </header>
+
+    @include('partials.announcement-bar')
 
     <main>
         @if(session('success'))

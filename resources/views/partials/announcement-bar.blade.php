@@ -1,5 +1,5 @@
 @if(isset($nextTour) && $nextTour)
-<div id="announcement-bar" class="announcement-bar" style="background: var(--accent); color: white; padding: 12px 20px; text-align: center; position: sticky; top: 0; z-index: 999; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3); display: flex; align-items: center; justify-content: center; gap: 15px; overflow: hidden;">
+<div id="announcement-bar" class="announcement-bar" style="background: var(--accent); color: white; padding: 12px 20px; text-align: center; position: sticky; z-index: 998; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3); display: flex; align-items: center; justify-content: center; gap: 15px; overflow: hidden;">
     <div class="flash-pulse" style="width: 10px; height: 10px; background: white; border-radius: 50%; box-shadow: 0 0 10px white;"></div>
     <span style="font-weight: 700; letter-spacing: 0.5px; font-size: 0.95rem;">
         NEXT BIG ADVENTURE: <span style="text-transform: uppercase;">{{ $nextTour->title }}</span> 
@@ -19,15 +19,19 @@
     @media (max-width: 768px) { .announcement-bar { flex-direction: column; gap: 8px; font-size: 0.8rem; } }
 </style>
 <script>
-    function adjustHeaderTop() {
-        var bar = document.getElementById('announcement-bar');
+    function adjustAnnouncementBar() {
         var header = document.getElementById('header');
-        if (bar && header) {
-            header.style.top = bar.offsetHeight + 'px';
+        var bar = document.getElementById('announcement-bar');
+        if (header && bar) {
+            var h = header.offsetHeight;
+            bar.style.marginTop = h + 'px';
+            bar.style.top = h + 'px';
         }
     }
-    document.addEventListener('DOMContentLoaded', adjustHeaderTop);
-    window.addEventListener('resize', adjustHeaderTop);
-    window.addEventListener('load', adjustHeaderTop);
+    document.addEventListener('DOMContentLoaded', adjustAnnouncementBar);
+    window.addEventListener('resize', adjustAnnouncementBar);
+    window.addEventListener('load', adjustAnnouncementBar);
+    window.addEventListener('scroll', adjustAnnouncementBar);
 </script>
 @endif
+
