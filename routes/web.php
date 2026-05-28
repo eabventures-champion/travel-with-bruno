@@ -62,19 +62,31 @@ Route::get('/clear-cache', function () {
 
     // File copy helper for "without .htaccess" Hostinger structure
     $sourceCss = base_path('public/assets/css/main.css');
-    $destCss = base_path('assets/css/main.css');
+    
+    // Target 1: same directory assets (e.g. public_html is base path)
+    $destCss1 = base_path('assets/css/main.css');
+    // Target 2: parent directory public_html (split structure)
+    $destCss2 = base_path('../public_html/assets/css/main.css');
     
     if (file_exists($sourceCss)) {
-        // Ensure destination folder exists
-        $destDir = dirname($destCss);
-        if (!is_dir($destDir)) {
-            mkdir($destDir, 0755, true);
+        // Copy to Target 1
+        $destDir1 = dirname($destCss1);
+        if (!is_dir($destDir1)) {
+            mkdir($destDir1, 0755, true);
+        }
+        if (copy($sourceCss, $destCss1)) {
+            $feedback[] = 'Copied main.css to base assets folder successfully!';
         }
         
-        if (copy($sourceCss, $destCss)) {
-            $feedback[] = 'Copied public/assets/css/main.css to assets/css/main.css successfully!';
-        } else {
-            $feedback[] = 'Failed to copy main.css from public folder to root assets folder.';
+        // Copy to Target 2 (for split bruno-core and public_html structure)
+        $destDir2 = dirname($destCss2);
+        if (is_dir(dirname($destDir2))) { // Check if the parent of the destination directory exists
+            if (!is_dir($destDir2)) {
+                mkdir($destDir2, 0755, true);
+            }
+            if (copy($sourceCss, $destCss2)) {
+                $feedback[] = 'Copied main.css to public_html assets folder successfully!';
+            }
         }
     } else {
         $feedback[] = 'Source main.css not found in public folder.';
