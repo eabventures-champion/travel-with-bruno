@@ -22,11 +22,17 @@
     function adjustHeaderAndBanner() {
         var header = document.getElementById('header');
         var bar = document.getElementById('announcement-bar');
+        var mobileNav = document.querySelector('.mobile-nav');
         if (!header) return;
         
         if (!bar) {
             header.style.top = '0px';
-            document.body.style.paddingTop = header.offsetHeight + 'px';
+            var headerHeight = header.offsetHeight;
+            document.body.style.paddingTop = headerHeight + 'px';
+            if (mobileNav) {
+                mobileNav.style.top = headerHeight + 'px';
+                mobileNav.style.height = 'calc(100vh - ' + headerHeight + 'px)';
+            }
             return;
         }
 
@@ -37,6 +43,10 @@
         bar.style.top = '';
         bar.style.marginTop = '';
         bar.style.position = '';
+        if (mobileNav) {
+            mobileNav.style.top = '';
+            mobileNav.style.height = '';
+        }
 
         var headerHeight = header.offsetHeight;
         var barHeight = bar.offsetHeight;
@@ -48,7 +58,13 @@
             bar.style.position = 'fixed';
             bar.style.width = '100%';
             bar.style.top = headerHeight + 'px';
-            document.body.style.paddingTop = (headerHeight + barHeight) + 'px';
+            var totalTop = headerHeight + barHeight;
+            document.body.style.paddingTop = totalTop + 'px';
+            
+            if (mobileNav) {
+                mobileNav.style.top = totalTop + 'px';
+                mobileNav.style.height = 'calc(100vh - ' + totalTop + 'px)';
+            }
         } else {
             // Desktop: Announcement banner is fixed at the absolute top (top: 0)
             // Header sits fixed below it (top: barHeight)
