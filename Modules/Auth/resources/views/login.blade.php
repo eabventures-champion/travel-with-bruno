@@ -48,6 +48,14 @@
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
         }
 
+        @media (max-width: 480px) {
+            .login-card {
+                width: calc(100% - 32px);
+                margin: 0 16px;
+                padding: 30px 20px;
+            }
+        }
+
         .login-header {
             text-align: center;
             margin-bottom: 30px;
@@ -63,6 +71,10 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
+        }
+
+        .login-header .logo:hover {
+            opacity: 0.8;
         }
 
         .login-header h1 {
@@ -162,10 +174,10 @@
 <body>
     <div class="login-card">
         <div class="login-header">
-            <div class="logo">
+            <a href="{{ url('/') }}" class="logo" style="text-decoration: none; transition: opacity 0.2s;">
                 <i class="fas fa-plane-departure"></i>
                 <span>BRUNO</span>
-            </div>
+            </a>
             <h1>Welcome Back</h1>
             <p>Please enter your details to sign in</p>
         </div>
