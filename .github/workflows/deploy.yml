@@ -14,18 +14,14 @@ jobs:
     - name: 🚚 Get latest code
       uses: actions/checkout@v4
 
-    - name: 🔑 Add SSH Host Key to Known Hosts
-      run: |
-        mkdir -p ~/.ssh
-        ssh-keyscan -p ${{ secrets.SFTP_PORT || 65002 }} -H ${{ secrets.SFTP_SERVER }} >> ~/.ssh/known_hosts
-
     - name: 📂 Sync files to Hostinger
       uses: wlixcc/SFTP-Deploy-Action@v1.2.6
       with:
         username: ${{ secrets.SFTP_USERNAME }}
         server: ${{ secrets.SFTP_SERVER }}
         password: ${{ secrets.SFTP_PASSWORD }}
-        port: ${{ secrets.SFTP_PORT || 65002 }}
+        port: ${{ secrets.SFTP_PORT }}
         local_path: './*'
         remote_path: '/home/u646076946/bruno-core/'
-        rsyncArgs: '--exclude=node_modules --exclude=.git --exclude=.github --exclude=vendor --exclude=.env --exclude=storage/logs'
+        sftp_only: true
+        args: '-o StrictHostKeyChecking=no'
