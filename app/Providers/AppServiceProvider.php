@@ -19,6 +19,16 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Auto-detect production URL so route() and url() never output localhost
+        if (!app()->runningInConsole() && app()->environment('production')) {
+            \Illuminate\Support\Facades\URL::forceScheme('https');
+        }
+        if (!app()->runningInConsole() && request()->getHost() !== 'localhost') {
+            \Illuminate\Support\Facades\URL::forceRootUrl(
+                request()->getSchemeAndHttpHost()
+            );
+        }
+
         view()->composer(['layouts.main', 'welcome'], function ($view) {
             try {
                 $nextTour = \Modules\Tourism\Models\TourismPackage::where('status', 'active')
