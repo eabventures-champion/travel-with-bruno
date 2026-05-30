@@ -579,26 +579,42 @@
         <h2 style="font-family: 'Outfit', sans-serif; color: var(--primary); margin: 0;">Welcome to Bruno Heights</h2>
         <p style="color: var(--text-muted); max-width: 500px; margin: 10px auto 0;">Manage your travel bookings, view your itineraries, and explore our premium fleet services all in one place.</p>
         
-        <div class="customer-grid">
-            <div style="background: #f8fafc; padding: 25px; border-radius: 15px; border-left: 5px solid var(--primary);">
-                <h4 style="margin: 0 0 10px; color: var(--primary); font-family: 'Outfit', sans-serif;"><i class="fas fa-umbrella-beach"></i> Fixed Tours</h4>
-                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">Discover breathtaking pre-packaged destinations and scheduled group adventures.</p>
-                <a href="{{ route('customer.tourism.fixed') }}" class="btn btn-primary" style="font-size: 0.85rem; padding: 8px 20px; border-radius: 8px; text-decoration: none; display: inline-block;">Book a Tour</a>
+        <div class="customer-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-top: 25px; text-align: left; padding: 10px 0;">
+            <div style="background: var(--bg-main); padding: 25px; border-radius: 15px; border: 1px solid var(--border); border-left: 5px solid var(--primary); box-shadow: var(--shadow-sm); display: flex; flex-direction: column; justify-content: space-between; min-height: 220px;">
+                <div>
+                    <h4 style="margin: 0 0 10px; color: var(--primary); font-family: 'Outfit', sans-serif;"><i class="fas fa-umbrella-beach"></i> Fixed Tours</h4>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px; line-height: 1.5;">Discover breathtaking pre-packaged destinations and scheduled group adventures.</p>
+                </div>
+                <div>
+                    <a href="{{ route('customer.tourism.fixed') }}" class="btn btn-primary" style="font-size: 0.85rem; padding: 10px 24px; border-radius: 8px; text-decoration: none; display: inline-block; box-shadow: 0 4px 10px rgba(37, 99, 235, 0.15);">Book a Tour</a>
+                </div>
             </div>
-            <div style="background: #f8fafc; padding: 25px; border-radius: 15px; border-left: 5px solid #10b981;">
-                <h4 style="margin: 0 0 10px; color: #10b981; font-family: 'Outfit', sans-serif;"><i class="fas fa-map-marked-alt"></i> Organized Tours</h4>
-                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">Plan your own custom itinerary or corporate getaway with our local experts.</p>
-                <a href="{{ route('customer.tourism.organized') }}" class="btn btn-primary" style="font-size: 0.85rem; padding: 8px 20px; border-radius: 8px; text-decoration: none; display: inline-block; background: #10b981; border: none;">Plan a Tour</a>
+            <div style="background: var(--bg-main); padding: 25px; border-radius: 15px; border: 1px solid var(--border); border-left: 5px solid #10b981; box-shadow: var(--shadow-sm); display: flex; flex-direction: column; justify-content: space-between; min-height: 220px;">
+                <div>
+                    <h4 style="margin: 0 0 10px; color: #10b981; font-family: 'Outfit', sans-serif;"><i class="fas fa-map-marked-alt"></i> Organized Tours</h4>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px; line-height: 1.5;">Plan your own custom itinerary or corporate getaway with our local experts.</p>
+                </div>
+                <div>
+                    <a href="{{ route('customer.tourism.organized') }}" class="btn btn-primary" style="font-size: 0.85rem; padding: 10px 24px; border-radius: 8px; text-decoration: none; display: inline-block; background: #10b981; border: none; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.15);">Plan a Tour</a>
+                </div>
             </div>
-            <div style="background: #f8fafc; padding: 25px; border-radius: 15px; border-left: 5px solid var(--accent);">
-                <h4 style="margin: 0 0 10px; color: var(--accent); font-family: 'Outfit', sans-serif;"><i class="fas fa-car"></i> Car Hiring</h4>
-                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">Rent premium vehicles with professional chauffeurs for your personal or corporate travel needs.</p>
-                <a href="{{ route('customer.fleet.hiring') }}" class="btn btn-primary" style="font-size: 0.85rem; padding: 8px 20px; border-radius: 8px; text-decoration: none; display: inline-block; background: var(--accent); border: none;">Hire a Vehicle</a>
+            <div style="background: var(--bg-main); padding: 25px; border-radius: 15px; border: 1px solid var(--border); border-left: 5px solid var(--accent); box-shadow: var(--shadow-sm); display: flex; flex-direction: column; justify-content: space-between; min-height: 220px;">
+                <div>
+                    <h4 style="margin: 0 0 10px; color: var(--accent); font-family: 'Outfit', sans-serif;"><i class="fas fa-car"></i> Car Hiring</h4>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px; line-height: 1.5;">Rent premium vehicles with professional chauffeurs for your personal or corporate travel needs.</p>
+                </div>
+                <div>
+                    <a href="{{ route('customer.fleet.hiring') }}" class="btn btn-primary" style="font-size: 0.85rem; padding: 10px 24px; border-radius: 8px; text-decoration: none; display: inline-block; background: var(--accent); border: none; box-shadow: 0 4px 10px rgba(245, 158, 11, 0.15);">Hire a Vehicle</a>
+                </div>
             </div>
-            <div style="background: #f8fafc; padding: 25px; border-radius: 15px; border-left: 5px solid #8b5cf6;">
-                <h4 style="margin: 0 0 10px; color: #8b5cf6; font-family: 'Outfit', sans-serif;"><i class="fas fa-plane-arrival"></i> Airport Transfers</h4>
-                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">Reliable, comfortable, and punctual airport pickup and drop-off services.</p>
-                <a href="{{ route('customer.fleet.transfers') }}" class="btn btn-primary" style="font-size: 0.85rem; padding: 8px 20px; border-radius: 8px; text-decoration: none; display: inline-block; background: #8b5cf6; border: none;">Book a Transfer</a>
+            <div style="background: var(--bg-main); padding: 25px; border-radius: 15px; border: 1px solid var(--border); border-left: 5px solid #8b5cf6; box-shadow: var(--shadow-sm); display: flex; flex-direction: column; justify-content: space-between; min-height: 220px;">
+                <div>
+                    <h4 style="margin: 0 0 10px; color: #8b5cf6; font-family: 'Outfit', sans-serif;"><i class="fas fa-plane-arrival"></i> Airport Transfers</h4>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px; line-height: 1.5;">Reliable, comfortable, and punctual airport pickup and drop-off services.</p>
+                </div>
+                <div>
+                    <a href="{{ route('customer.fleet.transfers') }}" class="btn btn-primary" style="font-size: 0.85rem; padding: 10px 24px; border-radius: 8px; text-decoration: none; display: inline-block; background: #8b5cf6; border: none; box-shadow: 0 4px 10px rgba(139, 92, 246, 0.15);">Book a Transfer</a>
+                </div>
             </div>
         </div>
     </div>
