@@ -2,6 +2,7 @@
 <!-- Lightbox Modal -->
 <div x-show="lightboxOpen" 
      class="lightbox-modal" 
+     style="display: none;"
      @click="lightboxOpen = false"
      @keydown.escape.window="lightboxOpen = false"
      x-cloak>
@@ -14,7 +15,7 @@
 <!-- Itinerary Modal -->
 <div x-show="itineraryOpen" 
      class="lightbox-modal" 
-     style="background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(12px);"
+     style="display: none; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(12px);"
      @keydown.escape.window="itineraryOpen = false"
      x-cloak>
     <div class="lightbox-content" style="background: var(--bg-card); width: 100%; max-width: 800px; height: auto; max-height: 90vh; padding: 0; overflow: hidden; display: flex; flex-direction: column; transform: none; cursor: default; border-radius: 25px; border: 1px solid var(--border);" @click.stop>
@@ -186,7 +187,7 @@
 <!-- Booking Modal -->
 <div x-show="bookingOpen" 
      class="lightbox-modal" 
-     style="background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(8px);"
+     style="display: none; background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(8px);"
      @keydown.escape.window="bookingOpen = false"
      x-cloak>
     <div class="lightbox-content" style="background: var(--bg-card); width: 100%; max-width: 650px; padding: 0; overflow: hidden; display: block; transform: none; cursor: default; border-radius: 20px; border: 1px solid var(--border);" @click.stop>
@@ -826,13 +827,15 @@
                         </div>
 
                         <!-- Rental Start Date Selection (For Fleet) -->
-                        <div x-show="bookingType === 'fleet'" style="margin-bottom: 25px;">
-                            <label style="display: block; font-size: 0.85rem; font-weight: 700; color: var(--text-muted); margin-bottom: 8px;">Select Rental Start Date & Time <span style="color: var(--danger);">*</span></label>
-                            <input type="datetime-local" name="scheduled_at" :required="bookingType === 'fleet'"
-                                   :min="minFleetScheduleDate"
-                                   style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg-main); color: var(--text-main); font-weight: 600;">
-                            <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 5px;">Rental must be scheduled at least <span x-text="fleetLeadDays"></span> days after the date of booking.</p>
-                        </div>
+                        <template x-if="bookingType === 'fleet'">
+                            <div style="margin-bottom: 25px;">
+                                <label style="display: block; font-size: 0.85rem; font-weight: 700; color: var(--text-muted); margin-bottom: 8px;">Select Rental Start Date & Time <span style="color: var(--danger);">*</span></label>
+                                <input type="datetime-local" name="scheduled_at" required
+                                       :min="minFleetScheduleDate"
+                                       style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg-main); color: var(--text-main); font-weight: 600;">
+                                <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 5px;">Rental must be scheduled at least <span x-text="fleetLeadDays"></span> days after the date of booking.</p>
+                            </div>
+                        </template>
 
                         <!-- Duration Type Selection (For Fleet) -->
                         <div x-show="bookingType === 'fleet'" style="margin-bottom: 25px;">
@@ -1003,27 +1006,27 @@
         url = $event.detail.url;
      "
      class="lightbox-modal"
-     style="background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(10px); z-index: 10002;"
+     style="display: none; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(10px); z-index: 10002;"
      x-cloak>
     <div class="lightbox-content animate-fade-up"
          x-on:click.outside="open = false"
-         style="background: white; width: 100%; max-width: 500px; padding: 45px; text-align: center; border-radius: 30px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);">
+         style="background: white; width: 100%; max-width: 500px; padding: 35px; text-align: center; border-radius: 30px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);">
          
-        <div style="width: 80px; height: 80px; background: #ecfdf5; color: #10b981; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px; font-size: 2.5rem;">
+        <div style="width: 60px; height: 60px; background: #ecfdf5; color: #10b981; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; font-size: 2rem;">
             <i class="fas fa-check-circle"></i>
         </div>
         
-        <h2 class="font-heading" style="margin: 0 0 15px; color: #0f172a; font-size: 1.8rem;">Booking Submitted!</h2>
-        <p style="color: #64748b; font-size: 1rem; line-height: 1.6; margin-bottom: 25px;">
-            Hi <strong style="color: #0f172a;" x-text="customer_name"></strong>, booking has been successfully submitted and is pending review by our operations team.
+        <h2 class="font-heading" style="margin: 0 0 10px; color: #0f172a; font-size: 1.8rem;">Booking Submitted!</h2>
+        <p style="color: #64748b; font-size: 1rem; line-height: 1.6; margin-bottom: 15px;">
+            Hi <strong style="color: #0f172a;" x-text="customer_name"></strong>, booking has been successfully submitted and is pending review by our operations team. Login to your dashboard when your booking is approved.
         </p>
 
-        <div style="margin-bottom: 20px; background: #ecfdf5; color: #065f46; padding: 10px 25px; border-radius: 50px; font-size: 0.95rem; border: 1px solid #a7f3d0; display: inline-block; font-weight: 700;">
+        <div style="margin-bottom: 12px; background: #ecfdf5; color: #065f46; padding: 10px 25px; border-radius: 50px; font-size: 0.95rem; border: 1px solid #a7f3d0; display: inline-block; font-weight: 700;">
             Reference Number: <span x-text="reference"></span>
         </div>
 
         <template x-if="scheduled_at">
-            <div style="display: block; margin: 5px auto 25px;">
+            <div style="display: block; margin: 0 auto 15px;">
                 <div style="padding: 12px 25px; border-radius: 12px; background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.2); display: inline-flex; align-items: center; gap: 10px; font-weight: 700; color: #b45309; font-size: 0.9rem; font-family: 'Inter', sans-serif;">
                     <i class="fas fa-calendar-alt" style="font-size: 1rem;"></i>
                     <span>Scheduled Date & Time: <strong x-text="scheduled_at"></strong></span>
@@ -1031,11 +1034,11 @@
             </div>
         </template>
 
-        <div style="display: flex; gap: 15px; margin-top: 30px;">
+        <div style="display: flex; gap: 15px; margin-top: 20px;">
             <a :href="url" 
                class="btn btn-primary"
                style="flex: 1; padding: 15px; border-radius: 12px; font-weight: 800; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.5px; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 12px rgba(30, 58, 138, 0.15); background: var(--primary); color: white;">
-                <i class="fas fa-ticket-alt"></i> View Booking
+                <i class="fas fa-ticket-alt"></i> View Dasboard
             </a>
             <button @click="open = false" 
                     class="btn btn-secondary" 
