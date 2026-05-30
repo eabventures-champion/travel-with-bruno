@@ -3,6 +3,84 @@
 
 <head>
     <meta charset="utf-8">
+
+    {{-- Preloader Styles (inline for instant render) --}}
+    <style>
+        #page-preloader {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            background: #0f172a;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.6s;
+        }
+        #page-preloader.preloader-hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        /* Plane icon */
+        .preloader-icon {
+            font-size: 3rem;
+            color: #f59e0b;
+            margin-bottom: 28px;
+            animation: preloaderFloat 2.4s ease-in-out infinite, preloaderGlow 2.4s ease-in-out infinite;
+            filter: drop-shadow(0 0 18px rgba(245, 158, 11, 0.5));
+        }
+        @keyframes preloaderFloat {
+            0%, 100% { transform: translateY(0) rotate(-2deg); }
+            50%      { transform: translateY(-14px) rotate(2deg); }
+        }
+        @keyframes preloaderGlow {
+            0%, 100% { filter: drop-shadow(0 0 12px rgba(245, 158, 11, 0.35)); }
+            50%      { filter: drop-shadow(0 0 28px rgba(245, 158, 11, 0.7)); }
+        }
+
+        /* Brand text */
+        .preloader-brand {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 1.35rem;
+            letter-spacing: 0.22em;
+            color: #ffffff;
+            margin-bottom: 40px;
+            animation: preloaderPulse 2s ease-in-out infinite;
+            text-align: center;
+        }
+        .preloader-brand span {
+            color: #dc2626;
+        }
+        @keyframes preloaderPulse {
+            0%, 100% { opacity: 0.7; }
+            50%      { opacity: 1; }
+        }
+
+        /* Loading bar track */
+        .preloader-bar-track {
+            width: 220px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+        }
+        .preloader-bar-fill {
+            position: absolute;
+            inset: 0;
+            border-radius: 6px;
+            background: linear-gradient(90deg, #1e3a8a, #f59e0b, #1e3a8a);
+            background-size: 200% 100%;
+            animation: preloaderBar 1.6s ease-in-out infinite;
+        }
+        @keyframes preloaderBar {
+            0%   { background-position: 100% 0; }
+            100% { background-position: -100% 0; }
+        }
+    </style>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title', 'Bruno Heights Ventures - Travel & Car Hiring')</title>
     <style>[x-cloak] { display: none !important; }</style>
@@ -491,6 +569,17 @@
 
 <body x-data="bookingApp">
 
+    {{-- Page Preloader --}}
+    <div id="page-preloader">
+        <div class="preloader-icon">
+            <i class="fas fa-plane"></i>
+        </div>
+        <div class="preloader-brand"><span>BRUNO</span> HEIGHTS VENTURES</div>
+        <div class="preloader-bar-track">
+            <div class="preloader-bar-fill"></div>
+        </div>
+    </div>
+
     @include('partials.tourism-modals')
 
     <header id="header" :class="{ 'scrolled': window.scrollY > 50 || mobileMenuOpen }"
@@ -645,6 +734,17 @@
         });
     </script>
     @endif
+
+    {{-- Preloader hide script --}}
+    <script>
+        window.addEventListener('load', function () {
+            var p = document.getElementById('page-preloader');
+            if (p) {
+                p.classList.add('preloader-hidden');
+                setTimeout(function () { p.remove(); }, 700);
+            }
+        });
+    </script>
 </body>
 
 </html>

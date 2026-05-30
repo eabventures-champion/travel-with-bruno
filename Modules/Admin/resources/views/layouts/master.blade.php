@@ -17,6 +17,79 @@
             document.documentElement.setAttribute('data-theme', theme);
         })();
     </script>
+
+    {{-- Preloader & Submit Styles --}}
+    <style>
+        #admin-page-preloader {
+            position: fixed;
+            inset: 0;
+            z-index: 999999;
+            background: #0f172a;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.4s;
+        }
+        #admin-page-preloader.preloader-hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        .admin-preloader-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .admin-preloader-icon {
+            font-size: 2.5rem;
+            color: #f59e0b;
+            margin-bottom: 20px;
+            animation: adminPreloaderFloat 2s ease-in-out infinite, adminPreloaderGlow 2s ease-in-out infinite;
+        }
+        @keyframes adminPreloaderFloat {
+            0%, 100% { transform: translateY(0) rotate(-2deg); }
+            50%      { transform: translateY(-10px) rotate(2deg); }
+        }
+        @keyframes adminPreloaderGlow {
+            0%, 100% { filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.35)); }
+            50%      { filter: drop-shadow(0 0 20px rgba(245, 158, 11, 0.6)); }
+        }
+        .admin-preloader-brand {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 1.1rem;
+            letter-spacing: 0.2em;
+            color: #ffffff;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+        .admin-preloader-brand span {
+            color: #ef4444;
+        }
+        .admin-preloader-bar-track {
+            width: 180px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+        }
+        .admin-preloader-bar-fill {
+            position: absolute;
+            inset: 0;
+            border-radius: 6px;
+            background: linear-gradient(90deg, #2563eb, #f59e0b, #2563eb);
+            background-size: 200% 100%;
+            animation: adminPreloaderBar 1.4s ease-in-out infinite;
+        }
+        @keyframes adminPreloaderBar {
+            0%   { background-position: 100% 0; }
+            100% { background-position: -100% 0; }
+        }
+    </style>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@hasSection('title')@yield('title') - @endif{{ config('app.name', 'Bruno Heights Ventures') }} Admin</title>
@@ -43,6 +116,19 @@
 </head>
 
 <body>
+    {{-- Admin Page Preloader --}}
+    <div id="admin-page-preloader">
+        <div class="admin-preloader-content">
+            <div class="admin-preloader-icon">
+                <i class="fas fa-plane-departure"></i>
+            </div>
+            <div class="admin-preloader-brand"><span>BRUNO</span> HEIGHTS ADMIN</div>
+            <div class="admin-preloader-bar-track">
+                <div class="admin-preloader-bar-fill"></div>
+            </div>
+        </div>
+    </div>
+
     <div class="admin-wrapper">
         <!-- Sidebar -->
         <aside class="sidebar" :class="sidebarOpen ? '' : 'collapsed'">
@@ -348,17 +434,198 @@
     </div>
 
     @stack('scripts')
+    
+    <!-- Submit Overlay (Premium Glassmorphism Style) -->
+    <div id="submit-overlay" style="display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 9999999; align-items: center; justify-content: center; flex-direction: column; color: white; font-family: 'Outfit', sans-serif; opacity: 0; transition: opacity 0.3s ease;">
+        <div style="background: rgba(30, 41, 59, 0.85); padding: 40px; border-radius: 24px; border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; max-width: 420px; width: 90%;">
+            <!-- Spinner -->
+            <div style="position: relative; width: 80px; height: 80px; margin-bottom: 25px; display: flex; align-items: center; justify-content: center;">
+                <div style="position: absolute; width: 100%; height: 100%; border: 4px solid rgba(37, 99, 235, 0.1); border-radius: 50%;"></div>
+                <div style="position: absolute; width: 100%; height: 100%; border: 4px solid transparent; border-top-color: #2563eb; border-radius: 50%; animation: submit-spin 1s linear infinite;"></div>
+                <i class="fas fa-plane-departure" style="font-size: 24px; color: #f59e0b; animation: submit-pulse 2s ease-in-out infinite;"></i>
+            </div>
+            <h3 id="submit-overlay-title" style="margin: 0 0 10px 0; font-size: 1.35rem; font-weight: 700; color: #f3f4f6; letter-spacing: 0.5px; font-family: 'Outfit', sans-serif;">Optimizing & Saving</h3>
+            <p id="submit-overlay-text" style="margin: 0; font-size: 0.95rem; color: #94a3b8; line-height: 1.5; font-family: 'Inter', sans-serif;">Compressing files for ultra-fast upload...</p>
+        </div>
+    </div>
+
+    <style>
+    @keyframes submit-spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    @keyframes submit-pulse {
+        0%, 100% { transform: scale(1); opacity: 0.8; }
+        50% { transform: scale(1.15); opacity: 1; }
+    }
+    </style>
+
+    {{-- Preloader hide & Form submission optimizer script --}}
     <script>
+        // Smoothly hide page preloader
+        window.addEventListener('load', function () {
+            var p = document.getElementById('admin-page-preloader');
+            if (p) {
+                p.classList.add('preloader-hidden');
+                setTimeout(function () { p.remove(); }, 500);
+            }
+        });
+
+        // Sidebar active item scrolling
         document.addEventListener('DOMContentLoaded', function() {
-            // Find the active sidebar item
             const activeItem = document.querySelector('.sidebar-nav .nav-item.active');
             if (activeItem) {
-                // Scroll the sidebar container to show the active item
-                // Use block: 'nearest' to only scroll if it's not already visible, 
-                // or 'center' to always bring it to the middle.
                 activeItem.scrollIntoView({ behavior: 'auto', block: 'nearest' });
             }
         });
+
+        // Form submit optimizer
+        (function() {
+            document.addEventListener('submit', function(e) {
+                const form = e.target;
+                
+                // Allow explicit bypass via attribute or prevent double submit
+                if (form.getAttribute('data-submitting') === 'true' || form.getAttribute('data-bypass-compress') === 'true') {
+                    return;
+                }
+                
+                // Don't intercept simple single-button delete forms or small action forms
+                const methodInput = form.querySelector('input[name="_method"]');
+                const isDelete = methodInput && methodInput.value.toUpperCase() === 'DELETE';
+                const hasConfirmAttr = form.getAttribute('onsubmit') && form.getAttribute('onsubmit').includes('confirm');
+                
+                const fileInputs = Array.from(form.querySelectorAll('input[type="file"]'));
+                const imagesToCompress = [];
+                
+                fileInputs.forEach(input => {
+                    if (input.files && input.files.length > 0) {
+                        for (let i = 0; i < input.files.length; i++) {
+                            const file = input.files[i];
+                            // Exclude animated GIFs to preserve animation
+                            if (file.type.startsWith('image/') && file.type !== 'image/gif' && file.size > 400 * 1024) {
+                                imagesToCompress.push({
+                                    input: input,
+                                    file: file,
+                                    index: i
+                                });
+                            }
+                        }
+                    }
+                });
+                
+                const overlay = document.getElementById('submit-overlay');
+                const titleEl = document.getElementById('submit-overlay-title');
+                const textEl = document.getElementById('submit-overlay-text');
+                
+                const showOverlay = (title, text) => {
+                    if (overlay) {
+                        titleEl.textContent = title;
+                        textEl.textContent = text;
+                        overlay.style.display = 'flex';
+                        overlay.offsetHeight; // Force reflow
+                        overlay.style.opacity = '1';
+                    }
+                };
+                
+                if (imagesToCompress.length > 0) {
+                    e.preventDefault(); // Stop submission for compression
+                    
+                    showOverlay('Optimizing Images', 'Preparing files for ultra-fast upload...');
+                    
+                    const inputGroup = {};
+                    imagesToCompress.forEach(item => {
+                        const key = item.input.name || item.input.id;
+                        if (!inputGroup[key]) {
+                            inputGroup[key] = {
+                                input: item.input,
+                                files: Array.from(item.input.files),
+                                originalFiles: Array.from(item.input.files)
+                            };
+                        }
+                    });
+                    
+                    const processNext = (index) => {
+                        if (index >= imagesToCompress.length) {
+                            // Re-build file lists
+                            Object.keys(inputGroup).forEach(key => {
+                                const group = inputGroup[key];
+                                const dataTransfer = new DataTransfer();
+                                group.files.forEach(file => dataTransfer.items.add(file));
+                                group.input.files = dataTransfer.files;
+                            });
+                            
+                            showOverlay('Saving Data', 'Uploading optimized files...');
+                            form.setAttribute('data-submitting', 'true');
+                            form.submit();
+                            return;
+                        }
+                        
+                        const item = imagesToCompress[index];
+                        const group = inputGroup[item.input.name || item.input.id];
+                        
+                        showOverlay('Optimizing Images', `Processing image ${index + 1} of ${imagesToCompress.length}...`);
+                        
+                        const reader = new FileReader();
+                        reader.onload = function(event) {
+                            const img = new Image();
+                            img.onload = function() {
+                                const canvas = document.createElement('canvas');
+                                let width = img.width;
+                                let height = img.height;
+                                const maxDim = 1920; // Perfect standard full HD banner size
+                                
+                                if (width > maxDim || height > maxDim) {
+                                    if (width > height) {
+                                        height = Math.round((height * maxDim) / width);
+                                        width = maxDim;
+                                    } else {
+                                        width = Math.round((width * maxDim) / height);
+                                        height = maxDim;
+                                    }
+                                }
+                                
+                                canvas.width = width;
+                                canvas.height = height;
+                                const ctx = canvas.getContext('2d');
+                                ctx.drawImage(img, 0, 0, width, height);
+                                
+                                canvas.toBlob(function(blob) {
+                                    if (blob) {
+                                        // Replace extension with .jpg
+                                        const ext = item.file.name.substring(item.file.name.lastIndexOf('.'));
+                                        const newName = item.file.name.replace(ext, '.jpg');
+                                        const compressedFile = new File([blob], newName, {
+                                            type: 'image/jpeg',
+                                            lastModified: Date.now()
+                                        });
+                                        
+                                        const fileIndex = group.originalFiles.indexOf(item.file);
+                                        if (fileIndex !== -1) {
+                                            group.files[fileIndex] = compressedFile;
+                                        }
+                                    }
+                                    processNext(index + 1);
+                                }, 'image/jpeg', 0.85);
+                            };
+                            img.onerror = function() { processNext(index + 1); };
+                            img.src = event.target.result;
+                        };
+                        reader.onerror = function() { processNext(index + 1); };
+                        reader.readAsDataURL(item.file);
+                    };
+                    
+                    processNext(0);
+                } else {
+                    // Show premium loading spinner overlay for standard submission
+                    // But don't show it for delete confirmation or simple inline action forms that confirm
+                    if (isDelete || hasConfirmAttr) {
+                        return;
+                    }
+                    showOverlay('Please Wait', 'Submitting your request...');
+                    form.setAttribute('data-submitting', 'true');
+                }
+            });
+        })();
     </script>
 </body>
 </html>

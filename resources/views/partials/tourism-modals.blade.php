@@ -748,6 +748,7 @@
                                     <label style="display: block; font-size: 0.85rem; font-weight: 700; color: var(--text-muted); margin-bottom: 8px;">Select Tour Schedule Date & Time <span style="color: var(--danger);">*</span></label>
                                     <input type="datetime-local" name="scheduled_at" :required="bookingItem?.package_type === 'fixed'"
                                            :min="minScheduleDate"
+                                           :disabled="bookingType !== 'tourism' || bookingItem?.package_type !== 'fixed'"
                                            style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg-main); color: var(--text-main); font-weight: 600;">
                                     <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 5px;">Tours must be scheduled at least <span x-text="tourLeadDays"></span> days after the date of booking.</p>
                                 </div>
@@ -830,8 +831,9 @@
                         <template x-if="bookingType === 'fleet'">
                             <div style="margin-bottom: 25px;">
                                 <label style="display: block; font-size: 0.85rem; font-weight: 700; color: var(--text-muted); margin-bottom: 8px;">Select Rental Start Date & Time <span style="color: var(--danger);">*</span></label>
-                                <input type="datetime-local" name="scheduled_at" required
+                                <input type="datetime-local" name="scheduled_at" :required="bookingType === 'fleet'"
                                        :min="minFleetScheduleDate"
+                                       :disabled="bookingType !== 'fleet'"
                                        style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg-main); color: var(--text-main); font-weight: 600;">
                                 <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 5px;">Rental must be scheduled at least <span x-text="fleetLeadDays"></span> days after the date of booking.</p>
                             </div>
