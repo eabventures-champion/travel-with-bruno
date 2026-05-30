@@ -1040,7 +1040,7 @@
             <a :href="url" 
                class="btn btn-primary"
                style="flex: 1; padding: 15px; border-radius: 12px; font-weight: 800; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.5px; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 12px rgba(30, 58, 138, 0.15); background: var(--primary); color: white;">
-                <i class="fas fa-ticket-alt"></i> View Dasboard
+                <i class="fas fa-ticket-alt"></i> View Dashboard
             </a>
             <button @click="open = false" 
                     class="btn btn-secondary" 

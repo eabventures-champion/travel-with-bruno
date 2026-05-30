@@ -8,7 +8,7 @@
     </div>
 </div>
 
-<div style="display: flex; flex-wrap: wrap; gap: 25px; margin-top: 30px;" x-data="{
+<div style="display: flex; flex-wrap: wrap; gap: 25px; margin-top: 30px; justify-content: center;" x-data="{
     bookingOpen: false,
     itineraryOpen: false,
     lightboxOpen: false,
@@ -144,7 +144,7 @@
     }
 }">
     @forelse($packages as $package)
-        <div class="card" style="padding: 0; overflow: hidden; border-radius: 20px; background: var(--bg-card); border: 1px solid var(--border); display: flex; flex-direction: column; width: 320px; flex-shrink: 0;">
+        <div class="card responsive-card" style="padding: 0; overflow: hidden; border-radius: 20px; background: var(--bg-card); border: 1px solid var(--border); display: flex; flex-direction: column;">
             <div style="height: 200px; position: relative;">
                 <img src="{{ $package->image ? asset('storage/' . $package->image) : 'https://placehold.co/600x400?text=No+Image' }}" 
                      style="width: 100%; height: 100%; object-fit: cover;">

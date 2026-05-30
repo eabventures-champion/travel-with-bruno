@@ -5,7 +5,7 @@
 @section('content')
 <div x-data="{ ongoingModal: false, completedModal: false, ongoingFixedModal: false, completedFixedModal: false }">
     <div class="dashboard-header" style="margin-bottom: 30px;">
-        <h1 style="font-family: 'Outfit', sans-serif; font-size: 2rem;">Welcome back, {{ Auth::user()->name ?? 'Admin' }}!</h1>
+        <h1 class="dashboard-welcome-title">Welcome back, {{ Auth::user()->name ?? 'Admin' }}!</h1>
         <p style="color: var(--text-muted);">Here's what's happening with Travel with Bruno today.</p>
     </div>
 
@@ -572,14 +572,14 @@
     @endrole
 
     @hasanyrole('Customer|Corporate Account')
-    <div class="card" style="padding: 30px; text-align: center; background: white; border-radius: 20px; box-shadow: var(--shadow-sm); margin-bottom: 30px;">
+    <div class="dashboard-welcome-card">
         <div style="width: 70px; height: 70px; background: rgba(245, 158, 11, 0.1); color: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; font-size: 1.8rem;">
             <i class="fas fa-user-circle"></i>
         </div>
         <h2 style="font-family: 'Outfit', sans-serif; color: var(--primary); margin: 0;">Welcome to Bruno Heights</h2>
         <p style="color: var(--text-muted); max-width: 500px; margin: 10px auto 0;">Manage your travel bookings, view your itineraries, and explore our premium fleet services all in one place.</p>
         
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 25px; text-align: left;">
+        <div class="customer-grid">
             <div style="background: #f8fafc; padding: 25px; border-radius: 15px; border-left: 5px solid var(--primary);">
                 <h4 style="margin: 0 0 10px; color: var(--primary); font-family: 'Outfit', sans-serif;"><i class="fas fa-umbrella-beach"></i> Fixed Tours</h4>
                 <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">Discover breathtaking pre-packaged destinations and scheduled group adventures.</p>
@@ -605,13 +605,13 @@
     @endhasanyrole
 
     @hasanyrole('Super Admin|Operations Admin|Customer|Corporate Account')
-    <div class="row" style="display: grid; grid-template-columns: 2fr 1fr; gap: 24px;">
+    <div class="row dashboard-row-grid">
         <div class="card">
             <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                 <h3 style="font-family: 'Outfit', sans-serif;">{{ auth()->user()->hasAnyRole(['Super Admin', 'Operations Admin']) ? 'Recent Bookings' : 'My Recent Bookings' }}</h3>
                 <a href="{{ route('admin.bookings.index') }}" style="color: var(--primary); text-decoration: none; font-size: 0.9rem; font-weight: 600;">View All</a>
             </div>
-            <div class="table-container" style="margin: 0 -30px;">
+            <div class="table-container dashboard-table-container">
                 <table style="width: 100%; border-collapse: collapse;">
                     <thead>
                         <tr style="text-align: left; background: rgba(30, 58, 138, 0.03); color: var(--text-muted); font-size: 0.7rem; text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px;">

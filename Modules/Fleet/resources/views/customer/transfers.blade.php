@@ -8,7 +8,7 @@
     </div>
 </div>
 
-<div style="display: flex; flex-wrap: wrap; gap: 25px; margin-top: 30px;" x-data="{
+<div style="display: flex; flex-wrap: wrap; gap: 25px; margin-top: 30px; justify-content: center;" x-data="{
     bookingOpen: false,
     itineraryOpen: false,
     lightboxOpen: false,
@@ -104,7 +104,7 @@
     }
 }">
     @forelse($transfers as $transfer)
-        <div class="card" style="padding: 0; overflow: hidden; border-radius: 20px; background: var(--bg-card); border: 1px solid var(--border); display: flex; flex-direction: column; transition: all 0.3s ease; width: 320px; flex-shrink: 0; position: relative;">
+        <div class="card responsive-card" style="padding: 0; overflow: hidden; border-radius: 20px; background: var(--bg-card); border: 1px solid var(--border); display: flex; flex-direction: column; transition: all 0.3s ease; position: relative;">
             <div style="position: absolute; top: 15px; right: 15px; background: var(--accent); color: white; padding: 4px 12px; border-radius: 12px; font-weight: 800; z-index: 10; text-transform: capitalize; font-size: 0.65rem;">
                 {{ $transfer->transfer_type === 'both' ? 'Pickup & Drop-off' : $transfer->transfer_type . ' Only' }}
             </div>

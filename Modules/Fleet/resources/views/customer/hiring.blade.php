@@ -8,7 +8,7 @@
     </div>
 </div>
 
-<div style="display: flex; flex-wrap: wrap; gap: 25px; margin-top: 30px;" x-data="{
+<div style="display: flex; flex-wrap: wrap; gap: 25px; margin-top: 30px; justify-content: center;" x-data="{
     bookingOpen: false,
     itineraryOpen: false,
     lightboxOpen: false,
@@ -99,7 +99,7 @@
     }
 }">
     @forelse($vehicles as $vehicle)
-        <div class="card" style="padding: 0; overflow: hidden; border-radius: 20px; background: var(--bg-card); border: 1px solid var(--border); display: flex; flex-direction: column; transition: all 0.3s ease; width: 320px; flex-shrink: 0;">
+        <div class="card responsive-card" style="padding: 0; overflow: hidden; border-radius: 20px; background: var(--bg-card); border: 1px solid var(--border); display: flex; flex-direction: column; transition: all 0.3s ease;">
             <div style="height: 180px; position: relative;">
                 <img src="{{ $vehicle->image ? asset('storage/' . $vehicle->image) : 'https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80&w=1000' }}" 
                      style="width: 100%; height: 100%; object-fit: cover;">
